@@ -1,0 +1,7 @@
+server:
+  listenIP: 0.0.0.0
+  ports: 10002
+redis:
+  host: "127.0.0.1:6379"
+  password: ""
+  db: 0
