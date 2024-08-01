@@ -1,1 +1,0 @@
-{"level":"info","ts":"2024-08-01T16:21:39.367+0800","caller":"rpc_draw/draw.go:17","msg":"RPC server is initializing rpcRegisterName: draw_201"}
