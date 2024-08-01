@@ -29,6 +29,8 @@ func main() {
 
 	// 连接数据库
 	GormMysql()
+	InitRedis()
+	defer CloseRedis()
 
 	// 根据命令行启动对应的服务
 	// context实现优雅的协程关闭通知

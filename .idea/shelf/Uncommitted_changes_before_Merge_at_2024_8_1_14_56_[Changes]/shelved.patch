@@ -1,0 +1,16 @@
+Index: server/rpc/draw.proto
+===================================================================
+diff --git a/server/rpc/draw.proto b/server/rpc/rpc_draw/proto/draw.proto
+rename from server/rpc/draw.proto
+rename to server/rpc/rpc_draw/proto/draw.proto
+--- a/server/rpc/draw.proto	
++++ b/server/rpc/rpc_draw/proto/draw.proto	
+@@ -1,7 +1,7 @@
+ syntax = "proto3";
+ 
+ package draw;
+-option go_package = "./rpc";
++option go_package = "./;proto";
+ 
+ import "google/protobuf/timestamp.proto";
+ 

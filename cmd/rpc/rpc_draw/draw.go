@@ -3,7 +3,7 @@ package rpc_draw
 import (
 	"context"
 	. "draw-together/common"
-	"draw-together/server/rpc/rpc_draw"
+	"draw-together/server/rpc/rpc_draw/proto"
 	"draw-together/server/rpc/rpc_draw/server"
 	"github.com/pkg/errors"
 	"google.golang.org/grpc"
@@ -27,7 +27,7 @@ func Start(c context.Context, rpcRegisterName, rpcTcpAddr string) error {
 	defer listener.Close()
 	// 初始化服务发现客户端
 	s := grpc.NewServer()
-	rpc_draw.RegisterGameServiceServer(s, &server.DrawServiceImpl{})
+	proto.RegisterGameServiceServer(s, &server.DrawServiceImpl{})
 	// 启动服务器
 	if err := s.Serve(listener); err != nil {
 		log.Fatalf("Failed to serve: %v", err)

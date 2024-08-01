@@ -1,0 +1,172 @@
+Index: cmd/api/api.go
+===================================================================
+diff --git a/cmd/api/api.go b/cmd/api/api.go
+deleted file mode 100644
+--- a/cmd/api/api.go	(revision 497fd2c3473b0ef5b3f3aef1571af46ba7cfe1bc)
++++ /dev/null	(revision 497fd2c3473b0ef5b3f3aef1571af46ba7cfe1bc)
+@@ -1,9 +0,0 @@
+-package api
+-
+-import "context"
+-
+-func Start(c context.Context) {
+-
+-	// 注册路由
+-
+-}
+Index: go.mod
+===================================================================
+diff --git a/go.mod b/go.mod
+deleted file mode 100644
+--- a/go.mod	(revision 497fd2c3473b0ef5b3f3aef1571af46ba7cfe1bc)
++++ /dev/null	(revision 497fd2c3473b0ef5b3f3aef1571af46ba7cfe1bc)
+@@ -1,27 +0,0 @@
+-module draw-together
+-
+-go 1.20
+-
+-require github.com/spf13/viper v1.19.0
+-
+-require (
+-	github.com/fsnotify/fsnotify v1.7.0 // indirect
+-	github.com/hashicorp/hcl v1.0.0 // indirect
+-	github.com/magiconair/properties v1.8.7 // indirect
+-	github.com/mitchellh/mapstructure v1.5.0 // indirect
+-	github.com/pelletier/go-toml/v2 v2.2.2 // indirect
+-	github.com/sagikazarmark/locafero v0.4.0 // indirect
+-	github.com/sagikazarmark/slog-shim v0.1.0 // indirect
+-	github.com/sourcegraph/conc v0.3.0 // indirect
+-	github.com/spf13/afero v1.11.0 // indirect
+-	github.com/spf13/cast v1.6.0 // indirect
+-	github.com/spf13/pflag v1.0.5 // indirect
+-	github.com/subosito/gotenv v1.6.0 // indirect
+-	go.uber.org/atomic v1.9.0 // indirect
+-	go.uber.org/multierr v1.9.0 // indirect
+-	golang.org/x/exp v0.0.0-20230905200255-921286631fa9 // indirect
+-	golang.org/x/sys v0.18.0 // indirect
+-	golang.org/x/text v0.14.0 // indirect
+-	gopkg.in/ini.v1 v1.67.0 // indirect
+-	gopkg.in/yaml.v3 v3.0.1 // indirect
+-)
+Index: main.go
+===================================================================
+diff --git a/main.go b/main.go
+deleted file mode 100644
+--- a/main.go	(revision 497fd2c3473b0ef5b3f3aef1571af46ba7cfe1bc)
++++ /dev/null	(revision 497fd2c3473b0ef5b3f3aef1571af46ba7cfe1bc)
+@@ -1,26 +0,0 @@
+-package main
+-
+-import (
+-	"flag"
+-	"fmt"
+-	"github.com/spf13/viper"
+-)
+-
+-func main() {
+-	// 从命令行获取项目的名称，构建配置文件地址，获取配置
+-	configDir := ""
+-	flag.StringVar(&configDir, "dir", "", "conf dir")
+-	flag.Parse()
+-
+-	v := viper.New()
+-	configFilePath := fmt.Sprintf("./config/%s", configDir)
+-	v.SetConfigFile(configFilePath)
+-	err := v.ReadInConfig()
+-	if err != nil {
+-		panic(fmt.Errorf("Fatal error config file: %s \n", err))
+-	}
+-	// 初始化日志
+-
+-	// 根据命令行启动对应的服务
+-
+-}
+Index: config/api.yaml
+===================================================================
+diff --git a/config/api.yaml b/config/api.yaml
+deleted file mode 100644
+--- a/config/api.yaml	(revision 497fd2c3473b0ef5b3f3aef1571af46ba7cfe1bc)
++++ /dev/null	(revision 497fd2c3473b0ef5b3f3aef1571af46ba7cfe1bc)
+@@ -1,7 +0,0 @@
+-server:
+-  listenIP: 0.0.0.0
+-  ports: 10002
+-redis:
+-  host: "127.0.0.1:6379"
+-  password: ""
+-  db: 0
+\ No newline at end of file
+Index: .idea/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+new file mode 100644
+--- /dev/null	(date 1722387605758)
++++ b/.idea/.gitignore	(date 1722387605758)
+@@ -0,0 +1,8 @@
++# Default ignored files
++/shelf/
++/workspace.xml
++# Editor-based HTTP Client requests
++/httpRequests/
++# Datasource local storage ignored files
++/dataSources/
++/dataSources.local.xml
+Index: .idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/modules.xml b/.idea/modules.xml
+new file mode 100644
+--- /dev/null	(date 1722387671378)
++++ b/.idea/modules.xml	(date 1722387671378)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectModuleManager">
++    <modules>
++      <module fileurl="file://$PROJECT_DIR$/.idea/draw-together.iml" filepath="$PROJECT_DIR$/.idea/draw-together.iml" />
++    </modules>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/draw-together.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/draw-together.iml b/.idea/draw-together.iml
+new file mode 100644
+--- /dev/null	(date 1722387671354)
++++ b/.idea/draw-together.iml	(date 1722387671354)
+@@ -0,0 +1,9 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module type="WEB_MODULE" version="4">
++  <component name="Go" enabled="true" />
++  <component name="NewModuleRootManager">
++    <content url="file://$MODULE_DIR$" />
++    <orderEntry type="inheritedJdk" />
++    <orderEntry type="sourceFolder" forTests="false" />
++  </component>
++</module>
+\ No newline at end of file
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+new file mode 100644
+--- /dev/null	(date 1722387671402)
++++ b/.idea/vcs.xml	(date 1722387671402)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
