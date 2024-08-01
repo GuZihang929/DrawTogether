@@ -26,6 +26,10 @@ func main() {
 	// 初始化日志
 	loglevel8 := int8(*loglevel)
 	InitSugaredLogger(loglevel8, configDir)
+
+	// 连接数据库
+	GormMysql()
+
 	// 根据命令行启动对应的服务
 	// context实现优雅的协程关闭通知
 	ctx, cancel := context.WithCancel(context.Background())

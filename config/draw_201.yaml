@@ -2,3 +2,7 @@ Net:
   Rpc: "0.0.0.0:2001"
   Http: "0.0.0.1:1012"
 Redis: "127.0.0.1:6379"
+Mysql:
+  Url: "root:123456@tcp(127.0.0.1:3306)/test?charset=utf8&parseTime=True&loc=Local"
+  Idleconn: 32
+  Openconn: 128
