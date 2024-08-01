@@ -30,7 +30,7 @@ func ReadConfig(p string) error {
 		panic(fmt.Errorf("read config file to struct err: %s \n", err))
 	}
 
-	name := path.Base(p)
+	name := strings.Split(path.Base(p), ".")[0]
 	Config.Server.Type = strings.Split(name, "_")[0]
 	Config.Server.Id = strings.Split(name, "_")[1]
 	Config.Server.Name = name

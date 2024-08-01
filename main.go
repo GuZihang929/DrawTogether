@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"draw-together/cmd/api"
+	"draw-together/cmd/rpc/rpc_draw"
 	. "draw-together/common"
 	"flag"
 	"fmt"
@@ -33,6 +34,11 @@ func main() {
 	switch Config.Server.Type {
 	case ServerType_api:
 		api.Start(ctx)
+	case ServerType_draw:
+		err := rpc_draw.Start(ctx, Config.Server.Name, Config.Server.Net.Rpc)
+		if err != nil {
+			SugaredLogger.Error("draw is not start: ", err)
+		}
 	default:
 		SugaredLogger.Error("server not found")
 		return

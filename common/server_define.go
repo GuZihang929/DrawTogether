@@ -6,4 +6,6 @@ const (
 	ServerType_auth = "auth"
 	// api服务
 	ServerType_api = "api"
+	// draw服务
+	ServerType_draw = "draw"
 )
