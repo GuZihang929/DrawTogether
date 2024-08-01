@@ -2,42 +2,70 @@ package server
 
 import (
 	"context"
-	"draw-together/server/rpc/rpc_draw"
+	"draw-together/common"
+	"draw-together/model"
+	"draw-together/server/rpc/rpc_draw/proto"
 	"fmt"
+	"github.com/dgrijalva/jwt-go"
+	"strconv"
 )
 
-//type DrawService interface {
-//	GetGameUser(ctx context.Context, req *rpc_draw.GameUserRequest) (*rpc_draw.GameUserResponse, error)
-//	GetList(ctx context.Context, req *rpc_draw.GetListRequest) (*rpc_draw.GetListResponse, error)
-//	RepairContent(ctx context.Context, req *rpc_draw.RepairContentRequest) (*rpc_draw.RepairContentResponse, error)
-//	GetOnlineUserList(ctx context.Context, req *rpc_draw.GetOnlineUserListRequest) (*rpc_draw.GetOnlineUserListResponse, error)
-//	GetChatList(ctx context.Context, req *rpc_draw.GetChatListRequest) (*rpc_draw.GetChatListResponse, error)
-//	AddWord(ctx context.Context, req *rpc_draw.AddWordRequest) (*rpc_draw.AddWordResponse, error)
-//}
-
 type DrawServiceImpl struct {
-	rpc_draw.UnimplementedGameServiceServer
+	proto.UnimplementedGameServiceServer
 }
 
-func (d *DrawServiceImpl) GetGameUser(ctx context.Context, req *rpc_draw.GameUserRequest) (*rpc_draw.GameUserResponse, error) {
-	fmt.Println("1234")
-	return &rpc_draw.GameUserResponse{}, nil
+func (d *DrawServiceImpl) GetGameUser(ctx context.Context, req *proto.GameUserRequest) (*proto.GameUserResponse, error) {
+	registerData := model.GameUser{}
+	userId, err := model.CreateGameUser(&registerData)
+	if err != nil {
+		common.SugaredLogger.Error("user", fmt.Sprintf("CreateGameUser error: %v", err))
+		return nil, err
+	}
+
+	userInfo, err := model.GetGameUserById(userId)
+	if err != nil {
+		common.SugaredLogger.Error("user", fmt.Sprintf("GetUserByUsername error: %v", err))
+
+		return nil, err
+	}
+	// 创建token
+	token := jwt.New(jwt.SigningMethodHS256)
+	// 创建一个token的声明
+	claims := token.Claims.(jwt.MapClaims)
+	// 可以添加自定义的用户ID或其他信息
+	claims["user_id"] = strconv.FormatInt(userInfo.Id, 10)
+	claims["created_at"] = userInfo.CreatedAt
+	t, err := token.SignedString([]byte("tebie6.com"))
+	if err != nil {
+		common.SugaredLogger.Error("user", fmt.Sprintf("create token error: %v", err))
+		return nil, err
+	}
+
+	userInfo.AccessToken = t
+	err = model.UpdateGameUser(userInfo)
+	if err != nil {
+		common.SugaredLogger.Error("user", fmt.Sprintf("SaveUserLoginTime error: %v", err))
+		return nil, err
+	}
+
+	return &proto.GameUserResponse{AccessToken: t}, nil
 }
-func (d *DrawServiceImpl) GetList(ctx context.Context, request *rpc_draw.GetListRequest) (*rpc_draw.GetListResponse, error) {
-	return &rpc_draw.GetListResponse{}, nil
+func (d *DrawServiceImpl) GetList(ctx context.Context, request *proto.GetListRequest) (*proto.GetListResponse, error) {
+
+	return &proto.GetListResponse{}, nil
 }
-func (d *DrawServiceImpl) RepairContent(ctx context.Context, req *rpc_draw.RepairContentRequest) (*rpc_draw.RepairContentResponse, error) {
-	return &rpc_draw.RepairContentResponse{}, nil
+func (d *DrawServiceImpl) RepairContent(ctx context.Context, req *proto.RepairContentRequest) (*proto.RepairContentResponse, error) {
+	return &proto.RepairContentResponse{}, nil
 }
 
-func (d *DrawServiceImpl) GetOnlineUserList(ctx context.Context, req *rpc_draw.GetOnlineUserListRequest) (*rpc_draw.GetOnlineUserListResponse, error) {
-	return &rpc_draw.GetOnlineUserListResponse{}, nil
+func (d *DrawServiceImpl) GetOnlineUserList(ctx context.Context, req *proto.GetOnlineUserListRequest) (*proto.GetOnlineUserListResponse, error) {
+	return &proto.GetOnlineUserListResponse{}, nil
 }
 
-func (d *DrawServiceImpl) GetChatList(ctx context.Context, req *rpc_draw.GetChatListRequest) (*rpc_draw.GetChatListResponse, error) {
-	return &rpc_draw.GetChatListResponse{}, nil
+func (d *DrawServiceImpl) GetChatList(ctx context.Context, req *proto.GetChatListRequest) (*proto.GetChatListResponse, error) {
+	return &proto.GetChatListResponse{}, nil
 }
 
-func (d *DrawServiceImpl) AddWord(ctx context.Context, req *rpc_draw.AddWordRequest) (*rpc_draw.AddWordResponse, error) {
-	return &rpc_draw.AddWordResponse{}, nil
+func (d *DrawServiceImpl) AddWord(ctx context.Context, req *proto.AddWordRequest) (*proto.AddWordResponse, error) {
+	return &proto.AddWordResponse{}, nil
 }
