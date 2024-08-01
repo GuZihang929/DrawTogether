@@ -4,5 +4,3 @@ Net:
 Redis: "127.0.0.1:6379"
 Mysql:
   Url: "root:123456@tcp(127.0.0.1:3306)/test?charset=utf8&parseTime=True&loc=Local"
-  Idleconn: 32
-  Openconn: 128

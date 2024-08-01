@@ -9,3 +9,11 @@ const (
 	// draw服务
 	ServerType_draw = "draw"
 )
+
+// redis key name
+
+const (
+	// 服务注册与发现
+	Server_IP     = "Server_%s_IP"
+	Server_status = "Server_%s_status"
+)
