@@ -1,22 +1,20 @@
-FROM golang:1.20 AS builder
+FROM golang:1.20 as builder
+#配置go代理
+ARG GOPROXY="https://goproxy.cn,direct"
+WORKDIR /workspace
+COPY go.mod go.mod
+COPY go.sum go.sum
 
-COPY . /src
-WORKDIR /src
+ENV GOPROXY=$GOPROXY
 
-RUN GOPROXY=https://goproxy.cn make build
+RUN go mod download
 
-FROM debian:stable-slim
+COPY . .
 
-#RUN apt-get update && apt-get install -y --no-install-recommends \
-#		ca-certificates  \
-#        netbase \
-#        && rm -rf /var/lib/apt/lists/ \
-#        && apt-get autoremove -y && apt-get autoclean -y
+RUN CGO_ENABLED=0 GOOS=linux  GO111MODULE=on go build -a -o manager main.go
 
-COPY --from=builder /src/bin /app
 
-WORKDIR /app
-
-EXPOSE 8000
-EXPOSE 9000
-VOLUME /data/conf
+FROM alpine:3.11.2
+WORKDIR /
+COPY --from=builder /workspace/manager .
+CMD ["/manager"]
