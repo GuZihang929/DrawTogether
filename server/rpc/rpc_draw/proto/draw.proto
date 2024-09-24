@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package draw;
+option go_package = "./rpc";
+
+import "google/protobuf/timestamp.proto";
+
+message GameUserRequest {
+  int64 id = 1;
+  string nickname = 2;
+  int32 status = 3;
+  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp updated_at = 5;
+}
+
+message GameUserResponse {
+  string access_token = 1;
+}
+message GetListRequest {
+}
+
+message GetListResponse {
+  map<string, int64> list = 1;
+}
+message RepairContentRequest {
+  string password = 1;
+}
+message RepairContentResponse {
+}
+message GetOnlineUserListRequest {
+}
+
+message GetOnlineUserListResponse {
+   map<string, string> list = 1;
+}
+message GetChatListRequest {
+}
+message GetChatListResponse {
+  repeated Message list = 1;
+}
+
+message Message {
+  string username = 1;
+  string msg = 2;
+}
+message AddWordRequest {
+  string word = 1;
+  string password = 2;
+}
+
+message AddWordResponse {
+  string word = 1;
+}
+service GameService {
+  rpc GetGameUser(GameUserRequest) returns (GameUserResponse);
+  rpc GetList(GetListRequest) returns (GetListResponse);
+  rpc RepairContent(RepairContentRequest) returns (RepairContentResponse);
+  rpc GetOnlineUserList(GetOnlineUserListRequest) returns (GetOnlineUserListResponse);
+  rpc GetChatList(GetChatListRequest) returns (GetChatListResponse);
+  rpc AddWord(AddWordRequest) returns (AddWordResponse);
+}
