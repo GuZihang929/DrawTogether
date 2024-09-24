@@ -6,6 +6,9 @@ import (
 )
 
 func Start(c context.Context) {
+
+	// 服务发现
+
 	Router := api.Routers()
 	s := api.InitServer(Router)
 	err := s.ListenAndServe()

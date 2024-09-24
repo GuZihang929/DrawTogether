@@ -10,7 +10,7 @@ func InitRedis() (err error) {
 	Rdb = redis.NewClient(&redis.Options{
 		Addr:     Config.Server.Redis,
 		Password: "",
-		DB:       0,
+		DB:       1,
 	})
 	return
 }

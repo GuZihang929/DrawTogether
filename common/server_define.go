@@ -14,6 +14,7 @@ const (
 
 const (
 	// 服务注册与发现
+	Server_Type   = "Server_%s"
 	Server_IP     = "Server_%s_IP"
 	Server_status = "Server_%s_status"
 )
